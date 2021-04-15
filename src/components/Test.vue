@@ -6,12 +6,41 @@
 </template>
 
 <script>
-import { defineProps, reactive, ref } from "vue";
+import {
+  defineProps,
+  reactive,
+  ref,
+  onMounted,
+  onUpdated,
+  onUnmounted,
+  getCurrentInstance,
+} from "vue";
 
 export default {
-  setup() {
+  props: {
+    name: {
+      type: String,
+      default: "name",
+    },
+  },
+  setup(props, context) {
+    console.log("props", props.name);
+
+    const internalInstance = getCurrentInstance();
+    // console.log(internalInstance);
+
     const readersNumber = ref(0);
     const book = reactive({ title: "Vue 3 Guide" });
+
+    onMounted(() => {
+      console.log("mounted!");
+    });
+    onUpdated(() => {
+      console.log("updated!");
+    });
+    onUnmounted(() => {
+      console.log("unmounted!");
+    });
 
     // expose to template
     return {
